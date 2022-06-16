@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id 'idea'
 
+
 }
 
 group = 'com.example'
@@ -20,7 +21,6 @@ idea {
 		downloadSources = true
 	}
 }
-//CLASSPATH =.;C:\Program Files\Microsoft JDBC Driver 9.4 for SQL Server\sqljdbc_9.4\enu\mssql-jdbc-9.4.1.jre11.jar
 
 repositories {
 	mavenCentral()
@@ -34,16 +34,16 @@ dependencyManagement {
 
 }
 
+
+
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter-jooq'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.projectlombok:lombok:1.18.24'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+	implementation 'net.sf.saxon:Saxon-HE:11.3'
 
-	implementation 'org.jooq:jooq:3.16.6'
-	implementation 'org.jooq:jooq-codegen:3.16.6'
-	implementation 'org.jooq:jooq-meta:3.16.6'
-	//localDatabase 'com.h2database:h2'
 	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

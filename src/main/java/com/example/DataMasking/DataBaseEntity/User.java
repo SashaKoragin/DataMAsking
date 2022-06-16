@@ -2,11 +2,11 @@ package com.example.DataMasking.DataBaseEntity;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "Users", indexes = {
-        @Index(name = "UQ__Users__6845136ED458ADDF", columnList = "IdHistory", unique = true)
-})
+@Table(name = "Users")
 public class User {
     private Integer id;
 
@@ -29,6 +29,10 @@ public class User {
     private String idHistory;
 
     private Instant dataCreate;
+
+    private Set<ConnectionString> connectionStrings = new LinkedHashSet<>();
+
+    private Set<RuleAndUser> ruleAndUsers = new LinkedHashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -132,4 +136,23 @@ public class User {
         this.dataCreate = dataCreate;
     }
 
+    @OneToMany(mappedBy = "idUser")
+    public Set<ConnectionString> getConnectionStrings() {
+        return connectionStrings;
+    }
+
+    public void setConnectionStrings(Set<ConnectionString> connectionStrings) {
+        this.connectionStrings = connectionStrings;
+    }
+
+    @OneToMany(mappedBy = "idUser")
+    public Set<RuleAndUser> getRuleAndUsers() {
+        return ruleAndUsers;
+    }
+
+    public void setRuleAndUsers(Set<RuleAndUser> ruleAndUsers) {
+        this.ruleAndUsers = ruleAndUsers;
+    }
+
 }
+
