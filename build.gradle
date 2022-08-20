@@ -41,6 +41,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jooq'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3'
+
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 	implementation 'net.sf.saxon:Saxon-HE:11.3'
 

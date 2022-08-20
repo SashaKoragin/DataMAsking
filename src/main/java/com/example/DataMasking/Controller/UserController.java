@@ -1,9 +1,11 @@
 package com.example.DataMasking.Controller;
 
-import com.example.DataMasking.DataBaseEntity.User;
+import com.example.DataMasking.CustomPhysicalNamingStrategy.DataBaseEntity.User;
+import com.example.DataMasking.ModelUserAndPassword.LoginAndPasswordUses;
 import com.example.DataMasking.ModelUserAndPassword.UserDtoLoginAndPassword;
 import com.example.DataMasking.Repository.UserRepository;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -14,12 +16,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/Users")
 
 public class UserController {
 
@@ -65,8 +69,18 @@ public class UserController {
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.openSession();
         try {
-            NativeQuery query = session.createSQLQuery("Select * From Users where ");
-            list = query.list();
+            NativeQuery query = session.createSQLQuery("Select NameUser,TabelNumber,LoginUser,PasswordsUser,StatusActual,IdHistory,\n" +
+                                                                 "(Select Rules.NameRules From RuleAndUsers\n" +
+                                                                 "Join Rules on Rules.IdRule = RuleAndUsers.IdRule\n" +
+                                                                 "Where RuleAndUsers.IdUser = Users.IdUser For Xml Auto,Type\n" +
+                                                                 ") From Users \n" +
+                                                                 "where LoginUser = :login and PasswordsUser = :password For Xml Auto,Root('LoginAndPasswordUses')")
+                    .setParameter("login", ModelLoginAndPassword.getPasswordsUser())
+                    .setParameter("password",ModelLoginAndPassword.getPasswordsUser());
+            var file = query.toString();
+            XmlMapper xmlMapper = new XmlMapper();
+            String xml = inputStreamToString(new FileInputStream(file));
+          //  SimpleBean value = xmlMapper.readValue(xml, SimpleBean.class);
             session.beginTransaction();
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -77,6 +91,23 @@ public class UserController {
             sessionFactory.close();
         }
         return  ResponseEntity.ok(list);
+    }
+
+    public String inputStreamToString(InputStream is) throws IOException {
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line;
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            br.close();
+            return sb.toString();
+        }
+        catch (Exception e){
+
+        }
+        return null;
     }
 
 }

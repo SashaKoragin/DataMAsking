@@ -9,39 +9,47 @@ public class UserDtoLoginAndPassword implements Serializable {
     private final String tabelNumber;
     private final String loginUser;
     private final String passwordsUser;
-    private final Boolean statusActual;
-    private final Set<List<RuleDto>> ruleUsers;
+    private final Boolean isError;
+    private final Boolean errorMessage;
+    private final String[] groupRuleServer;
 
-    public UserDtoLoginAndPassword(String nameUser, String tabelNumber, String loginUser, String passwordsUser, Boolean statusActual, Set<List<RuleDto>> ruleUsers) {
+    public UserDtoLoginAndPassword(String nameUser, String tabelNumber, String loginUser, String passwordsUser, Boolean isError,Boolean errorMessage,  String[] groupRuleServer) {
         this.nameUser = nameUser;
         this.tabelNumber = tabelNumber;
         this.loginUser = loginUser;
         this.passwordsUser = passwordsUser;
-        this.statusActual = statusActual;
-        this.ruleUsers = ruleUsers;
+        this.errorMessage = errorMessage;
+        this.groupRuleServer = groupRuleServer;
+        this.isError = isError;
+
     }
 
-    public String getNameUser() {
-        return nameUser;
+
+    public Boolean getErrorMessage() {
+        return errorMessage;
     }
 
-    public String getTabelNumber() {
-        return tabelNumber;
+    public String[] getGroupRuleServer() {
+        return groupRuleServer;
     }
 
-    public String getLoginUser() {
-        return loginUser;
+    public Boolean getError() {
+        return isError;
     }
 
     public String getPasswordsUser() {
         return passwordsUser;
     }
 
-    public Boolean getStatusActual() {
-        return statusActual;
+    public String getLoginUser() {
+        return loginUser;
     }
 
-    public Set<List<RuleDto>> getRuleAndUsers() {
-        return ruleUsers;
+    public String getTabelNumber() {
+        return tabelNumber;
+    }
+
+    public String getNameUser() {
+        return nameUser;
     }
 }

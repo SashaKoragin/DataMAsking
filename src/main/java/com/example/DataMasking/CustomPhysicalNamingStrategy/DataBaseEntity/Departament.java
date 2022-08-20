@@ -1,20 +1,19 @@
-package com.example.DataMasking.DataBaseEntity;
+package com.example.DataMasking.CustomPhysicalNamingStrategy.DataBaseEntity;
 
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "Rules")
-public class Rule {
+public class Departament {
     private Integer id;
 
-    private String nameRules;
+    private String nameDepartament;
 
     private Instant dataCreate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdRule", nullable = false)
+    @Column(name = "IdDepartament", nullable = false)
     public Integer getId() {
         return id;
     }
@@ -23,13 +22,13 @@ public class Rule {
         this.id = id;
     }
 
-    @Column(name = "NameRules", length = 128)
-    public String getNameRules() {
-        return nameRules;
+    @Column(name = "NameDepartament", length = 256)
+    public String getNameDepartament() {
+        return nameDepartament;
     }
 
-    public void setNameRules(String nameRules) {
-        this.nameRules = nameRules;
+    public void setNameDepartament(String nameDepartament) {
+        this.nameDepartament = nameDepartament;
     }
 
     @Column(name = "DataCreate")

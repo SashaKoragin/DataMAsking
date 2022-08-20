@@ -1,4 +1,4 @@
-package com.example.DataMasking.DataBaseEntity;
+package com.example.DataMasking.CustomPhysicalNamingStrategy.DataBaseEntity;
 
 import javax.persistence.*;
 import java.time.Instant;
